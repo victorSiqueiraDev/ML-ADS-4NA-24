@@ -1,0 +1,175 @@
+import pandas as pd
+
+# URL do dataset Wine
+url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data'
+
+# Nome das colunas em português BR
+column_names_pt_br = [
+    'classe',
+    'alcool',
+    'acido_malico',
+    'cinzas',
+    'alcalinidade_de_cinzas',
+    'magnesio',
+    'fenois_totais',
+    'flavanoides',
+    'fenois_nao_flavanoides',
+    'proantocianinas',
+    'intensidade_de_cor',
+    'matiz',
+    'od280_od315_de_vinhos_diluidos',
+    'prolina'
+]
+
+# Ler o arquivo CSV com as colunas especificadas, definindo a coluna 'classe' como object
+vinhos = pd.read_csv(url, names=column_names_pt_br, dtype={'classe': object})
+
+from sklearn.model_selection import train_test_split
+
+# Separando as variáveis independentes (X) e dependente (y)
+X = vinhos.drop(columns=['classe'])  # Variáveis preditoras
+y = vinhos['classe']  # Variável alvo
+
+# Dividindo os dados em treino (70%) e teste (30%)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# Exibindo os tamanhos dos conjuntos
+print("Tamanho do conjunto de treino:", len(X_train))
+print("Tamanho do conjunto de teste:", len(X_test))
+print("Tamanho do conjunto de treino (alvo):", len(y_train))
+print("Tamanho do conjunto de teste (alvo):", len(y_test))
+
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import train_test_split
+
+# Separando as variáveis independentes (X) e dependente (y)
+X = vinhos.drop(columns=['classe'])  # Variáveis preditoras
+y = vinhos['classe']  # Variável alvo
+
+# Dividindo os dados em treino (70%) e teste (30%)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# Treinando o modelo com k = 3
+knn_3 = KNeighborsClassifier(n_neighbors=3)
+knn_3.fit(X_train, y_train)
+y_pred_3 = knn_3.predict(X_test)
+accuracy_3 = accuracy_score(y_test, y_pred_3)
+print(f"Acurácia com k=3: {accuracy_3:.2f}")
+
+# Treinando o modelo com k = 5
+knn_5 = KNeighborsClassifier(n_neighbors=5)
+knn_5.fit(X_train, y_train)
+y_pred_5 = knn_5.predict(X_test)
+accuracy_5 = accuracy_score(y_test, y_pred_5)
+print(f"Acurácia com k=5: {accuracy_5:.2f}")
+
+# Comparação dos modelos
+melhor_k = 3 if accuracy_3 > accuracy_5 else 5
+print(f"O modelo com k={melhor_k} apresenta melhor desempenho.")
+
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import train_test_split
+
+# Separando as variáveis independentes (X) e dependente (y)
+X = vinhos.drop(columns=['classe'])  # Variáveis preditoras
+y = vinhos['classe']  # Variável alvo
+
+# Dividindo os dados em treino (70%) e teste (30%)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# Treinando o modelo com k = 3
+knn_3 = KNeighborsClassifier(n_neighbors=3)
+knn_3.fit(X_train, y_train)
+y_pred_3 = knn_3.predict(X_test)
+accuracy_3 = accuracy_score(y_test, y_pred_3)
+print(f"Acurácia com k=3: {accuracy_3:.2f}")
+
+# Treinando o modelo com k = 5
+knn_5 = KNeighborsClassifier(n_neighbors=5)
+knn_5.fit(X_train, y_train)
+y_pred_5 = knn_5.predict(X_test)
+accuracy_5 = accuracy_score(y_test, y_pred_5)
+print(f"Acurácia com k=5: {accuracy_5:.2f}")
+
+# Comparação dos modelos
+melhor_k = 3 if accuracy_3 > accuracy_5 else 5
+print(f"O modelo com k={melhor_k} apresenta melhor desempenho.")
+
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import train_test_split
+
+# Função para realizar a análise
+def avaliar_knn_com_random_state(random_state):
+    # Dividindo os dados em treino e teste com o random_state fornecido
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=random_state)
+
+    # Treinando e avaliando o modelo com k = 3
+    knn_3 = KNeighborsClassifier(n_neighbors=3)
+    knn_3.fit(X_train, y_train)
+    y_pred_3 = knn_3.predict(X_test)
+    accuracy_3 = accuracy_score(y_test, y_pred_3)
+
+    # Treinando e avaliando o modelo com k = 5
+    knn_5 = KNeighborsClassifier(n_neighbors=5)
+    knn_5.fit(X_train, y_train)
+    y_pred_5 = knn_5.predict(X_test)
+    accuracy_5 = accuracy_score(y_test, y_pred_5)
+
+    # Apresentando os resultados
+    print(f"Random State: {random_state}")
+    print(f"Acurácia com k=3: {accuracy_3:.2f}")
+    print(f"Acurácia com k=5: {accuracy_5:.2f}")
+    print("-" * 30)
+    return accuracy_3, accuracy_5
+
+# Valores de random_state para análise
+random_states = [17, 24]
+
+# Executando a análise para cada random_state
+for rs in random_states:
+    avaliar_knn_com_random_state(rs)
+
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import train_test_split
+
+# Função para realizar a análise
+def avaliar_knn_com_random_state(random_state):
+    # Dividindo os dados em treino e teste com o random_state fornecido
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=random_state)
+
+    # Resultados para diferentes valores de k
+    resultados = []
+
+    for k in [3, 5]:
+        knn = KNeighborsClassifier(n_neighbors=k)
+        knn.fit(X_train, y_train)
+        y_pred = knn.predict(X_test)
+        accuracy = accuracy_score(y_test, y_pred)
+        resultados.append((random_state, k, accuracy))
+
+    return resultados
+
+# Valores de random_state para análise
+random_states = [42, 17, 24]
+
+# Coletando os resultados
+todos_resultados = []
+for rs in random_states:
+    todos_resultados.extend(avaliar_knn_com_random_state(rs))
+
+# Criando um DataFrame para facilitar a análise
+import pandas as pd
+df_resultados = pd.DataFrame(todos_resultados, columns=['Random State', 'k', 'Accuracy'])
+
+# Identificando o melhor desempenho geral
+melhor_configuracao = df_resultados.loc[df_resultados['Accuracy'].idxmax()]
+
+# Exibindo a comparação
+print("Resultados Comparativos:")
+print(df_resultados)
+print("\nMelhor Configuração:")
+print(melhor_configuracao)
